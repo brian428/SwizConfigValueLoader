@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="SwizConfigValueLoader" default="build" basedir="C:/Developer/flex/shared/swiz_config_value_loader">
+	
+	<property name="LIBRARY_NAME" value="SwizConfigValueLoader" />
+	<property name="RELEASE_VERSION" value="1.0.0" />
+	<property name="SDK_VERSION" value="4.5.1"/>
+	<property name="FLEX_HOME" value="C:/Developer/IDE/Flex/Adobe Flash Builder 4.5/sdks/${SDK_VERSION}"/>
+	
+	<taskdef name="mxmlc" classname="flex.ant.MxmlcTask" classpath="${FLEX_HOME}/ant/lib/flexTasks.jar"/>
+	<taskdef name="compc" classname="flex.ant.CompcTask" classpath="${FLEX_HOME}/ant/lib/flexTasks.jar"/>
+	<taskdef name="html-wrapper" classname="flex.ant.HtmlWrapperTask" classpath="${FLEX_HOME}/ant/lib/flexTasks.jar"/>
+	<taskdef name="asdoc" classname="flex.ant.AsDocTask" classpath="${FLEX_HOME}/ant/lib/flexTasks.jar"/>
+
+	<property name="PROJECT_DIR" value="${basedir}" />
+	<property name="SOURCE_DIR" value="${PROJECT_DIR}/src"/>
+	<property name="OUTPUT_DIR" value="${PROJECT_DIR}/release"/>
+	<property name="VERSION_FILE_PATH" value="${SOURCE_DIR}/org/swizframework/externalconfig/ConfigLoader.as"/>
+	<property name="LOCALE" value="en_US"/>
+
+	<target name="build">
+		<antcall target="clean"/>
+		<antcall target="prepare"/>
+		<antcall target="compile"/>
+	</target>
+
+	<target name="clean">
+		<delete includeemptydirs="true">
+			<fileset dir="${OUTPUT_DIR}" includes="**/*"/>
+		</delete>
+	</target>
+	
+	<target name="prepare">
+		<replaceregexp file="${VERSION_FILE_PATH}"
+		               match='VERSION_NUMBER : String = "(.*)"'
+		               replace='VERSION_NUMBER : String = "${RELEASE_VERSION}"'
+		               byline="true" />
+	</target>
+
+	<target name="compile">
+		<compc output="${OUTPUT_DIR}/${LIBRARY_NAME}-v${RELEASE_VERSION}.swc" debug="false" optimize="true">
+			
+			<source-path path-element="${SOURCE_DIR}"/>
+			<include-sources dir="${SOURCE_DIR}" includes="*"/>
+			
+			<external-library-path dir="${FLEX_HOME}/frameworks/libs" append="true">
+				<include name="*.swc" />
+            </external-library-path>
+            <external-library-path dir="${FLEX_HOME}/frameworks/libs/air" append="true">
+				<include name="*.swc" />
+            </external-library-path>
+			<external-library-path dir="${FLEX_HOME}/frameworks/libs/automation" append="true">
+				<include name="*.swc" />
+            </external-library-path>
+			<external-library-path dir="${FLEX_HOME}/frameworks/libs/mobile" append="true">
+				<include name="*.swc" />
+			</external-library-path>
+			<external-library-path dir="${FLEX_HOME}/frameworks/libs/mx" append="true">
+				<include name="*.swc" />
+			</external-library-path>
+			<external-library-path dir="${FLEX_HOME}/frameworks/libs/player" append="true">
+				<include name="*.swc" />
+			</external-library-path>			
+			<external-library-path dir="${FLEX_HOME}/frameworks/locale/${LOCALE}" append="true">
+				<include name="*.swc" />
+			</external-library-path>
+			
+			<library-path file="${PROJECT_DIR}/libs" append="true"/>
+		</compc>
+	</target>
+
+</project>

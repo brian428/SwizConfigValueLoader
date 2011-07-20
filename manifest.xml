@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<componentPackage>
+	
+	<component class="org.swizframework.externalconfig.SwizConfigValueLoader" />
+	<component class="org.swizframework.externalconfig.ConfigLoader" />
+	<component class="org.swizframework.externalconfig.event.ConfigLoaderEvent" />
+	
+</componentPackage>
