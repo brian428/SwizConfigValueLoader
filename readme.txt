@@ -10,9 +10,9 @@ For example, given an XML file like this:
 You can declare something like this in a BeanProvider:
 
 	<externalconfig:SwizConfigValueLoader id="configLoader" source="config.xml" />
-	<controller:MyController id="myController" 
-							 value1="{configLoader.configData.config.value1}" 
-							 value2="{configLoader.configData.config.value2}" />
+	<controller:MyController id="myController"
+                             value1="{configLoader.configData.config.value1}" 
+                             value2="{configLoader.configData.config.value2}" />
 
 and have the specified values from the external XML file set into the other bean(s).
 
